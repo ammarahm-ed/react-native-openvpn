@@ -1,7 +1,4 @@
-/*
- * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
- */
+
 
 package org.spongycastle.util.encoders;
 
@@ -13,9 +10,7 @@ public class Base64Encoder implements Encoder {
 
     protected byte padding = (byte) '=';
 
-    /*
-     * set up the decoding table.
-     */
+
     protected final byte[] decodingTable = new byte[128];
 
     protected void initialiseDecodingTable() {
@@ -28,11 +23,7 @@ public class Base64Encoder implements Encoder {
         initialiseDecodingTable();
     }
 
-    /**
-     * encode the input data producing a base 64 output stream.
-     *
-     * @return the number of bytes produced.
-     */
+
     public int encode(byte[] data, int off, int length, OutputStream out) throws IOException {
         int modulus = length % 3;
         int dataLength = (length - modulus);
@@ -49,14 +40,12 @@ public class Base64Encoder implements Encoder {
             out.write(encodingTable[a3 & 0x3f]);
         }
 
-        /*
-         * process the tail end.
-         */
+
         int b1, b2, b3;
         int d1, d2;
 
         switch (modulus) {
-            case 0:        /* nothing left to do */
+            case 0:
                 break;
             case 1:
                 d1 = data[off + dataLength] & 0xff;
@@ -90,12 +79,7 @@ public class Base64Encoder implements Encoder {
         return (c == '\n' || c == '\r' || c == '\t' || c == ' ');
     }
 
-    /**
-     * decode the base 64 encoded byte data writing it to the given output stream,
-     * whitespace characters will be ignored.
-     *
-     * @return the number of bytes produced.
-     */
+
     public int decode(byte[] data, int off, int length, OutputStream out) throws IOException {
         byte b1, b2, b3, b4;
         int outLen = 0;
@@ -151,12 +135,7 @@ public class Base64Encoder implements Encoder {
         return i;
     }
 
-    /**
-     * decode the base 64 encoded String data writing it to the given output stream,
-     * whitespace characters will be ignored.
-     *
-     * @return the number of bytes produced.
-     */
+
     public int decode(String data, OutputStream out) throws IOException {
         byte b1, b2, b3, b4;
         int length = 0;
